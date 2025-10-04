@@ -1,0 +1,13 @@
+# vote-api/src/test/resources/application-test.yml
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+  sql:
+    init:
+      mode: never  # 我們用 @Sql 載檔，不用 Spring Boot 自動載
+logging:
+  level:
+    root: warn

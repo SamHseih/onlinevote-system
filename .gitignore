@@ -18,3 +18,13 @@ yarn-error.log*
 
 # VSCode
 .vscode/
+
+# env 
+.env
+.env.*
+*.pem
+*.p12
+*.keystore
+*.crt
+*.key
+Thumbs.db
