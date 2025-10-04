@@ -34,9 +34,8 @@ onlinevote-system/
 ### 1. Setup Database
 ```sql
 SOURCE DB/schema.sql;
-SOURCE DB/views.sql;
+SOURCE DB/data.sql;
 SOURCE DB/sp_vote.sql;
-SOURCE DB/sp_cast_votes.sql;
 ```
 
 ### 2. Configure Backend
