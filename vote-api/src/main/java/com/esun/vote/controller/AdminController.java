@@ -1,11 +1,17 @@
 package com.esun.vote.controller;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /** 後台管理 */
+@Validated
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
@@ -18,10 +24,13 @@ public class AdminController {
     return Map.of("ok", true);
   }
 
-  @PutMapping("/items/{id}")
+  @PutMapping("/items/{id}")// updateItem 參數補驗證
   public Map<String,Object> updateItem(@PathVariable Long id,
-                                       @RequestParam String name,
-                                       @RequestParam(defaultValue="1") int enabled) {
+                                       @RequestParam 
+                                       @NotBlank 
+                                       @Size(max = 100) String name,
+                                       @RequestParam(defaultValue="1") 
+                                       @Min(0) @Max(1) int enabled)  {
     jdbc.update("CALL sp_update_item(?,?,?)", id, name, enabled);
     return Map.of("ok", true);
   }
