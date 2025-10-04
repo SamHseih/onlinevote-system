@@ -1,4 +1,4 @@
-# Online Voting System
+# Voting System
 
 A simple full-stack online voting system built with Spring Boot, Vue.js, and MySQL.  
 It demonstrates RESTful API design, stored procedures, and transactional operations with front–back separation.
@@ -77,7 +77,3 @@ npm run dev
 - Uses prepared statements via JdbcTemplate to prevent SQL injection.
 - Avoids storing credentials in Git; use environment variables or local config files.
 - Frontend input is validated to reduce XSS risk.
-
-## License
-
-MIT License © 2025
