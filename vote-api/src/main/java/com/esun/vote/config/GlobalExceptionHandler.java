@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(DataIntegrityViolationException.class)
   @ResponseStatus(HttpStatus.CONFLICT)
   public Map<String,Object> handleDup(Exception e) {
-    return Map.of("ok", false, "error", "重複投票或資料限制違反");
+    return Map.of("ok", false, "error", "重複投票!");
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

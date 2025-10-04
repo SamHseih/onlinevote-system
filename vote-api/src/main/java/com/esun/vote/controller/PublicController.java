@@ -25,7 +25,7 @@ public class PublicController {
 
   @PostMapping("/votes")
   public Map<String,Object> vote(@Valid @RequestBody VoteRequest req) {
-    voteService.vote(req);
+    voteService.vote(req.getVoter(), req.getItemIds());
     return Map.of("ok", true);
   }
 }

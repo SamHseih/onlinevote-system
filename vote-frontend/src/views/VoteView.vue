@@ -33,7 +33,7 @@ async function submit() {
   msg.value = '';
   const ids = Array.from(selected.value);
   if (!voter.value.trim() || ids.length === 0) {
-    msg.value = '請輸入投票人並至少選一個項目';
+    msg.value = '請輸入投票人名，並且至少選一個項目';
     return;
   }
   loading.value = true;
