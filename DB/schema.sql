@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS vote_record;
 DROP TABLE IF EXISTS vote_stat;
 DROP TABLE IF EXISTS vote_item;
 
-CREATE TABLE vote_item (
+CREATE TABLE IF NOT EXISTS  vote_item (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL UNIQUE,
   enabled TINYINT NOT NULL DEFAULT 1
@@ -23,7 +23,7 @@ CREATE TABLE vote_item (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE vote_record (
+CREATE TABLE IF NOT EXISTS  vote_record (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   voter VARCHAR(100) NOT NULL,
   item_id BIGINT NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE vote_record (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE vote_stat (
+CREATE TABLE IF NOT EXISTS  vote_stat (
   item_id BIGINT PRIMARY KEY,
   total INT NOT NULL DEFAULT 0,
   CONSTRAINT fk_stat_item FOREIGN KEY (item_id) REFERENCES vote_item(id) ON DELETE CASCADE
@@ -88,3 +88,9 @@ BEGIN
   ORDER BY i.id;
 END//
 DELIMITER ;
+-- 方便查詢：即時統計檢視表（不依賴 vote_stat，也不影響既有流程）
+CREATE OR REPLACE VIEW v_items_with_count AS
+SELECT i.id, i.name, i.enabled, COUNT(r.id) AS total
+FROM vote_item i
+LEFT JOIN vote_record r ON r.item_id = i.id
+GROUP BY i.id, i.name, i.enabled;

@@ -10,8 +10,10 @@ BEGIN
   START TRANSACTION;
   SET n = JSON_LENGTH(p_item_ids);
   WHILE i < n DO
-    SET item_id = JSON_EXTRACT(p_item_ids, CONCAT('$[', i, ']'));
-    INSERT INTO vote_record(voter, item_id) VALUES (p_voter, item_id);
+    -- 取出 JSON 陣列中的第 i 個元素，轉為整數
+    SET item_id = CAST(JSON_UNQUOTE(JSON_EXTRACT(p_item_ids, CONCAT('$[', i, ']'))) AS UNSIGNED);
+    -- 透過 sp_vote 寫入紀錄並更新統計
+    CALL sp_vote(p_voter, item_id);
     SET i = i + 1;
   END WHILE;
   COMMIT;
